@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Delete dated releases for one model older than <days>. Leaves the
 # `<model>-latest` rolling pointer alone.
-# Usage: prune_releases.sh <model> [days=7]
+# Usage: prune_releases.sh <model> [days=3]
 set -euo pipefail
 MODEL="${1:?model}"
-DAYS="${2:-7}"
+DAYS="${2:-3}"
 
 cutoff_s=$(( $(date -u +%s) - DAYS*86400 ))
 

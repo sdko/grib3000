@@ -78,6 +78,6 @@ jobs:
             --notes "Rolling pointer to the most recent cycle: ${{ steps.cycle.outputs.date }} ${{ steps.cycle.outputs.hour }}Z." \
             --repo "$GITHUB_REPOSITORY"
 
-      - name: Prune dated releases older than 7 days
+      - name: Prune dated releases older than 3 days
         if: steps.gate.outputs.skip != 'true'
-        run: bash scripts/prune_releases.sh "$MODEL" 7
+        run: bash scripts/prune_releases.sh "$MODEL" 3

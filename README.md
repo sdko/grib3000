@@ -12,7 +12,7 @@ Arome 0.025°, Arome 0.01°) it:
    (ECMWF/GFS via index + HTTP Range, MF via the OVH S3 mirror).
 4. Runs `wgrib2 -small_grib` once per region.
 5. Publishes two releases:
-   - `<model>-<YYYY-MM-DD>-<HH>Z` — dated archive, auto-pruned after 7 days.
+   - `<model>-<YYYY-MM-DD>-<HH>Z` — dated archive, auto-pruned after 3 days.
    - `<model>-latest` — rolling pointer the app reads.
 
 ## URLs the app consumes
