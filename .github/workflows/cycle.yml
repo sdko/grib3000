@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         model: [ecmwf, gfs, arpege01, arome0025, arome001]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 35
     concurrency:
       group: cycle-${{ matrix.model }}
