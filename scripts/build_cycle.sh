@@ -26,6 +26,15 @@ case "$MODEL" in
     ;;
 esac
 
+# Keep only 10 m wind components + surface gust, regardless of producer.
+# Producers vary in what HP1/SP1 ships; this normalises the asset to the
+# minimum a sailing app needs.
+F="$DIST/_filtered.grib2"
+wgrib2 "$NATIVE" \
+  -match ':((UGRD|VGRD):10 m above ground|GUST:surface):' \
+  -GRIB "$F" >/dev/null
+mv "$F" "$NATIVE"
+
 # Bbox-cut for each region the model serves. wgrib2's `-small_grib` takes
 # lonW:lonE then latS:latN; coordinates are degrees on the source grid.
 regions=$(jq -r --arg m "$MODEL" '.[$m].regions[]' models.json)

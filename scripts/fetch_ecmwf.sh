@@ -11,7 +11,7 @@ BASE="https://data.ecmwf.int/forecasts/${CD}/${HH}z/ifs/0p25/oper"
 
 # 0..72 h every 3 h covers normal sailing horizons. Extend to 240 later if needed.
 STEPS=(0 3 6 9 12 15 18 21 24 27 30 33 36 39 42 45 48 54 60 66 72)
-WANTED='10u 10v msl 2t 10fg'
+WANTED='10u 10v 10fg'
 
 : > "$OUT"
 for step in "${STEPS[@]}"; do
