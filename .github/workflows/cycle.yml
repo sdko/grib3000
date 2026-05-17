@@ -14,11 +14,14 @@ jobs:
       fail-fast: false
       matrix:
         model: [ecmwf, gfs, arpege01, arome0025, arome001]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     timeout-minutes: 35
     concurrency:
       group: cycle-${{ matrix.model }}
       cancel-in-progress: false
+    defaults:
+      run:
+        shell: bash -el {0}
     env:
       MODEL: ${{ matrix.model }}
       GH_TOKEN: ${{ github.token }}
@@ -26,8 +29,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install tools
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq wgrib2 jq curl
+      - name: Install wgrib2 (conda-forge)
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-name: wgrib2env
+          create-args: >-
+            -c conda-forge
+            wgrib2
+          cache-environment: true
+          init-shell: bash
 
       - name: Detect latest published cycle
         id: cycle
