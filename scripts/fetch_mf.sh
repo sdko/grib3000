@@ -27,14 +27,14 @@ case "$MODEL" in
     done
     ;;
   arome001)
-    # 0.01° AROME HP1: hourly files 00H..24H.
-    for h in $(seq -f '%02g' 0 24); do
+    # 0.01° AROME HP1: hourly files 00H..51H (full operational horizon).
+    for h in $(seq -f '%02g' 0 51); do
       fetch "${S3}/${STAMP}/arome/001/HP1/arome__001__HP1__${h}H__${STAMP}.grib2"
     done
     ;;
   arome0025)
-    # 0.025° AROME HP1: 6-hour bundles up to 48 h.
-    for r in 00H06H 07H12H 13H18H 19H24H; do
+    # 0.025° AROME HP1: 6-h bundles 00H06H..43H48H + tail bundle 49H51H.
+    for r in 00H06H 07H12H 13H18H 19H24H 25H30H 31H36H 37H42H 43H48H 49H51H; do
       fetch "${S3}/${STAMP}/arome/0025/HP1/arome__0025__HP1__${r}__${STAMP}.grib2"
     done
     ;;

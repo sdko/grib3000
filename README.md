@@ -33,8 +33,8 @@ every URL you can pull.
 | `ecmwf`     | data.ecmwf.int 0.25° IFS, surface (10u/10v/msl/2t/10fg) | 3 h  | 72 h    | all     |
 | `gfs`       | NOAA NOMADS 0.25°, surface (UGRD/VGRD/PRMSL/TMP/GUST)   | 3 h  | 72 h    | all     |
 | `arpege01`  | MF OVH S3, Arpège 0.1° Europe, SP1 package           | 1 h  | 48 h    | all     |
-| `arome0025` | MF OVH S3, Arome 0.025° W. Europe, HP1               | 1 h  | 24 h    | med + atl |
-| `arome001`  | MF OVH S3, Arome 0.01° W. Europe, HP1                | 1 h  | 24 h    | med + atl |
+| `arome0025` | MF OVH S3, Arome 0.025° W. Europe, HP1               | 1 h  | 51 h    | med + atl |
+| `arome001`  | MF OVH S3, Arome 0.01° W. Europe, HP1                | 1 h  | 51 h    | med + atl |
 
 Arome's native domain stops at ~55.4 °N, so it can't cover the top of
 `manche-mer-du-nord` — handled by omitting that region from its
