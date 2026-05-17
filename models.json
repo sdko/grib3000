@@ -1,0 +1,42 @@
+{
+  "ecmwf": {
+    "name": "ECMWF IFS 0.25°",
+    "source": "ecmwf-opendata",
+    "native_bbox": [-90, 90, -180, 180],
+    "cycle_step_h": 6,
+    "lag_minutes": 420,
+    "regions": ["france-med", "manche-mer-du-nord", "atlantique"]
+  },
+  "gfs": {
+    "name": "NOAA GFS 0.25°",
+    "source": "nomads",
+    "native_bbox": [-90, 90, -180, 180],
+    "cycle_step_h": 6,
+    "lag_minutes": 270,
+    "regions": ["france-med", "manche-mer-du-nord", "atlantique"]
+  },
+  "arpege01": {
+    "name": "Météo-France Arpège 0.1° (Europe)",
+    "source": "mf-s3",
+    "native_bbox": [20, 72, -32, 42],
+    "cycle_step_h": 6,
+    "lag_minutes": 360,
+    "regions": ["france-med", "manche-mer-du-nord", "atlantique"]
+  },
+  "arome0025": {
+    "name": "Météo-France Arome 0.025° (W. Europe)",
+    "source": "mf-s3",
+    "native_bbox": [37.5, 55.4, -12, 16],
+    "cycle_step_h": 3,
+    "lag_minutes": 180,
+    "regions": ["france-med", "atlantique"]
+  },
+  "arome001": {
+    "name": "Météo-France Arome 0.01° (W. Europe, hi-res)",
+    "source": "mf-s3",
+    "native_bbox": [37.5, 55.4, -12, 16],
+    "cycle_step_h": 3,
+    "lag_minutes": 180,
+    "regions": ["france-med", "atlantique"]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "france-med": {
+    "name": "Méditerranée française + Corse",
+    "bbox": [39.5, 44.5, 2.5, 11.0],
+    "description": "Golfe du Lion, Côte d'Azur, Ligure, Corse, nord-Sardaigne, est-Baléares."
+  },
+  "manche-mer-du-nord": {
+    "name": "Manche + Mer du Nord",
+    "bbox": [48.5, 56.0, -6.0, 9.0],
+    "description": "Manche occidentale et orientale, Pas-de-Calais, sud de la mer du Nord jusqu'à la pointe du Jutland."
+  },
+  "atlantique": {
+    "name": "Atlantique (Gascogne + Bretagne)",
+    "bbox": [43.0, 50.0, -10.0, -1.0],
+    "description": "Golfe de Gascogne, côtes Aquitaine et Vendée, Bretagne sud et ouest, approches d'Ouessant."
+  }
+}

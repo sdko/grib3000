@@ -1,0 +1,73 @@
+name: Build GRIB cycle
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        model: [ecmwf, gfs, arpege01, arome0025, arome001]
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    concurrency:
+      group: cycle-${{ matrix.model }}
+      cancel-in-progress: false
+    env:
+      MODEL: ${{ matrix.model }}
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq wgrib2 jq curl
+
+      - name: Detect latest published cycle
+        id: cycle
+        run: bash scripts/detect_cycle.sh "$MODEL" >> "$GITHUB_OUTPUT"
+
+      - name: Skip if cycle already published
+        id: gate
+        run: |
+          TAG="$MODEL-${{ steps.cycle.outputs.date }}-${{ steps.cycle.outputs.hour }}Z"
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::$TAG already published, skipping"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build + bbox-cut
+        if: steps.gate.outputs.skip != 'true'
+        run: bash scripts/build_cycle.sh "$MODEL" "${{ steps.cycle.outputs.date }}" "${{ steps.cycle.outputs.hour }}"
+
+      - name: Publish dated release
+        if: steps.gate.outputs.skip != 'true'
+        run: |
+          TAG="${{ steps.gate.outputs.tag }}"
+          gh release create "$TAG" dist/$MODEL/*.grib2 \
+            --title "$TAG" \
+            --notes "Auto-built from $MODEL cycle ${{ steps.cycle.outputs.date }} ${{ steps.cycle.outputs.hour }}Z UTC." \
+            --repo "$GITHUB_REPOSITORY"
+
+      - name: Update -latest pointer
+        if: steps.gate.outputs.skip != 'true'
+        run: |
+          LATEST="$MODEL-latest"
+          gh release delete "$LATEST" --yes --cleanup-tag --repo "$GITHUB_REPOSITORY" 2>/dev/null || true
+          gh release create "$LATEST" dist/$MODEL/*.grib2 \
+            --title "$MODEL latest" \
+            --notes "Rolling pointer to the most recent cycle: ${{ steps.cycle.outputs.date }} ${{ steps.cycle.outputs.hour }}Z." \
+            --repo "$GITHUB_REPOSITORY"
+
+      - name: Prune dated releases older than 7 days
+        if: steps.gate.outputs.skip != 'true'
+        run: bash scripts/prune_releases.sh "$MODEL" 7
