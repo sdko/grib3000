@@ -29,11 +29,16 @@ probe() {
       curl -fsS -o /dev/null --max-time 10 -I \
         "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arpege/01/SP1/arpege__01__SP1__000H012H__${stamp}.grib2"
       ;;
-    arome0025|arome001)
-      local res=${MODEL#arome}
+    arome001)
       local stamp="${d}T${h}:00:00Z"
       curl -fsS -o /dev/null --max-time 10 -I \
-        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arome/${res}/HP1/arome__${res}__HP1__00H__${stamp}.grib2"
+        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arome/001/HP1/arome__001__HP1__00H__${stamp}.grib2"
+      ;;
+    arome0025)
+      # 0.025° AROME ships 6-hour bundles, not hourly files.
+      local stamp="${d}T${h}:00:00Z"
+      curl -fsS -o /dev/null --max-time 10 -I \
+        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arome/0025/HP1/arome__0025__HP1__00H06H__${stamp}.grib2"
       ;;
     *) return 1 ;;
   esac

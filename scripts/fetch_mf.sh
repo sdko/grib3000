@@ -26,11 +26,16 @@ case "$MODEL" in
       fetch "${S3}/${STAMP}/arpege/01/SP1/arpege__01__SP1__${r}__${STAMP}.grib2"
     done
     ;;
-  arome0025|arome001)
-    res="${MODEL#arome}"        # "001" or "0025"
-    # HP1 = hourly surface package 1. One file per forecast hour 00H..24H.
+  arome001)
+    # 0.01° AROME HP1: hourly files 00H..24H.
     for h in $(seq -f '%02g' 0 24); do
-      fetch "${S3}/${STAMP}/arome/${res}/HP1/arome__${res}__HP1__${h}H__${STAMP}.grib2"
+      fetch "${S3}/${STAMP}/arome/001/HP1/arome__001__HP1__${h}H__${STAMP}.grib2"
+    done
+    ;;
+  arome0025)
+    # 0.025° AROME HP1: 6-hour bundles up to 48 h.
+    for r in 00H06H 07H12H 13H18H 19H24H; do
+      fetch "${S3}/${STAMP}/arome/0025/HP1/arome__0025__HP1__${r}__${STAMP}.grib2"
     done
     ;;
   *) echo "unsupported MF model: $MODEL" >&2; exit 2 ;;

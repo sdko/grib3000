@@ -31,8 +31,9 @@ for step in "${STEPS[@]}"; do
   while read -r off len; do
     [ -z "$off" ] && continue
     end=$(( off + len - 1 ))
-    curl -fsS --max-time 120 -H "Range: bytes=${off}-${end}" "$grib_url" >> "$OUT"
-    sleep 0.06
+    curl -fsS --max-time 120 --retry 5 --retry-delay 5 --retry-all-errors \
+      -H "Range: bytes=${off}-${end}" "$grib_url" >> "$OUT"
+    sleep 0.3
   done <<< "$pairs"
 done
 
