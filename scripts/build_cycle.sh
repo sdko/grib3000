@@ -31,7 +31,7 @@ esac
 # minimum a sailing app needs.
 F="$DIST/_filtered.grib2"
 wgrib2 "$NATIVE" \
-  -match ':((UGRD|VGRD):10 m above ground|GUST:surface):' \
+  -match ':((UGRD|VGRD):10 m above ground|GUST:[^:]+|PRMSL:mean sea level|TMP:2 m above ground):' \
   -GRIB "$F" >/dev/null
 mv "$F" "$NATIVE"
 

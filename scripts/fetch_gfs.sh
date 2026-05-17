@@ -12,7 +12,7 @@ BASE="https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.${CD}/${HH}/at
 STEPS=(000 003 006 009 012 015 018 021 024 027 030 033 036 039 042 045 048 054 060 066 072)
 
 # GFS idx variable:level lines we want. Pattern is anchored with ":".
-WANTED_RE=':(UGRD:10 m above ground|VGRD:10 m above ground|GUST:surface):'
+WANTED_RE=':(UGRD:10 m above ground|VGRD:10 m above ground|GUST:surface|PRMSL:mean sea level|TMP:2 m above ground):'
 
 : > "$OUT"
 for step in "${STEPS[@]}"; do
