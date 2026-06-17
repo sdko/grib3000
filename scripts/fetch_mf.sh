@@ -22,7 +22,7 @@ fetch() {
 case "$MODEL" in
   arpege01)
     # SP1 = surface package 1 (incl. 10 m wind, MSL, T2m, gust).
-    for r in 000H012H 013H024H 025H036H 037H048H; do
+    for r in 000H012H 013H024H 025H036H 037H048H 049H060H 061H072H; do
       fetch "${S3}/${STAMP}/arpege/01/SP1/arpege__01__SP1__${r}__${STAMP}.grib2"
     done
     ;;

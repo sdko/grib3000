@@ -32,7 +32,7 @@ every URL you can pull.
 |-------------|------------------------------------------------------|------|---------|---------|
 | `ecmwf`     | data.ecmwf.int 0.25° IFS, surface (10u/10v/10fg/msl/2t) | 3 h  | 72 h    | all     |
 | `gfs`       | NOAA NOMADS 0.25°, surface (UGRD/VGRD/GUST/PRMSL/TMP)   | 3 h  | 72 h    | all     |
-| `arpege01`  | MF OVH S3, Arpège 0.1° Europe, SP1 package           | 1 h  | 48 h    | all     |
+| `arpege01`  | MF OVH S3, Arpège 0.1° Europe, SP1 package           | 1 h  | 72 h    | all     |
 | `arome0025` | MF OVH S3, Arome 0.025° W. Europe, HP1               | 1 h  | 51 h    | med + atl |
 | `arome001`  | MF OVH S3, Arome 0.01° W. Europe, HP1                | 1 h  | 51 h    | med + atl |
 
