@@ -28,7 +28,7 @@
     "source": "mf-s3",
     "native_bbox": [37.5, 55.4, -12, 16],
     "cycle_step_h": 3,
-    "lag_minutes": 180,
+    "lag_minutes": 240,
     "regions": ["france-med", "atlantique"]
   },
   "arome001": {
@@ -36,7 +36,7 @@
     "source": "mf-s3",
     "native_bbox": [37.5, 55.4, -12, 16],
     "cycle_step_h": 3,
-    "lag_minutes": 180,
+    "lag_minutes": 240,
     "regions": ["france-med", "atlantique"]
   }
 }

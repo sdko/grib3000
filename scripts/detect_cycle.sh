@@ -30,15 +30,20 @@ probe() {
         "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arpege/01/SP1/arpege__01__SP1__000H012H__${stamp}.grib2"
       ;;
     arome001)
+      # Probe the LAST hourly file (51H), not the first: AROME publishes its
+      # horizon incrementally over ~4 h, so only the final file's presence
+      # proves the whole cycle is online. Probing 00H would accept a
+      # half-published cycle and yield a truncated release.
       local stamp="${d}T${h}:00:00Z"
       curl -fsS -o /dev/null --max-time 10 -I \
-        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arome/001/HP1/arome__001__HP1__00H__${stamp}.grib2"
+        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arome/001/HP1/arome__001__HP1__51H__${stamp}.grib2"
       ;;
     arome0025)
-      # 0.025° AROME ships 6-hour bundles, not hourly files.
+      # 0.025° AROME ships 6-hour bundles, not hourly files. Probe the LAST
+      # bundle (49H51H) so we only accept a fully-published cycle (see above).
       local stamp="${d}T${h}:00:00Z"
       curl -fsS -o /dev/null --max-time 10 -I \
-        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arome/0025/HP1/arome__0025__HP1__00H06H__${stamp}.grib2"
+        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arome/0025/HP1/arome__0025__HP1__49H51H__${stamp}.grib2"
       ;;
     *) return 1 ;;
   esac
