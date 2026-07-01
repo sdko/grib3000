@@ -25,9 +25,12 @@ probe() {
         "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.${cd}/${h}/atmos/gfs.t${h}z.pgrb2.0p25.f000.idx"
       ;;
     arpege01)
+      # Probe the LAST bundle we fetch (061H072H), not the first: MF publishes
+      # the horizon incrementally, so only the final file's presence proves
+      # the whole cycle is online (fetch_mf.sh hard-fails on missing files).
       local stamp="${d}T${h}:00:00Z"
       curl -fsS -o /dev/null --max-time 10 -I \
-        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arpege/01/SP1/arpege__01__SP1__000H012H__${stamp}.grib2"
+        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arpege/01/SP1/arpege__01__SP1__061H072H__${stamp}.grib2"
       ;;
     arome001)
       # Probe the LAST hourly file (51H), not the first: AROME publishes its
@@ -36,14 +39,14 @@ probe() {
       # half-published cycle and yield a truncated release.
       local stamp="${d}T${h}:00:00Z"
       curl -fsS -o /dev/null --max-time 10 -I \
-        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arome/001/HP1/arome__001__HP1__51H__${stamp}.grib2"
+        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arome/001/SP1/arome__001__SP1__51H__${stamp}.grib2"
       ;;
     arome0025)
       # 0.025° AROME ships 6-hour bundles, not hourly files. Probe the LAST
       # bundle (49H51H) so we only accept a fully-published cycle (see above).
       local stamp="${d}T${h}:00:00Z"
       curl -fsS -o /dev/null --max-time 10 -I \
-        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arome/0025/HP1/arome__0025__HP1__49H51H__${stamp}.grib2"
+        "https://meteofrance-pnt.s3.rbx.io.cloud.ovh.net/pnt/${stamp}/arome/0025/SP1/arome__0025__SP1__49H51H__${stamp}.grib2"
       ;;
     *) return 1 ;;
   esac

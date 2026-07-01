@@ -26,12 +26,13 @@ case "$MODEL" in
     ;;
 esac
 
-# Keep only 10 m wind components + surface gust, regardless of producer.
-# Producers vary in what HP1/SP1 ships; this normalises the asset to the
-# minimum a sailing app needs.
+# Keep only 10 m wind + gust + MSLP + 2 m temp, regardless of producer.
+# Producers vary in what they ship; this normalises the asset to the
+# minimum a sailing app needs. UGUST/VGUST: 0.01° AROME has no scalar
+# GUST — it publishes gust as u/v components instead.
 F="$DIST/_filtered.grib2"
 wgrib2 "$NATIVE" \
-  -match ':((UGRD|VGRD):10 m above ground|GUST:[^:]+|PRMSL:mean sea level|TMP:2 m above ground):' \
+  -match ':((UGRD|VGRD|UGUST|VGUST):10 m above ground|GUST:[^:]+|PRMSL:mean sea level|TMP:2 m above ground):' \
   -GRIB "$F" >/dev/null
 mv "$F" "$NATIVE"
 
