@@ -12,8 +12,11 @@ fetch() {
   # file before we get here, and MF publishes steps in order. Download to a
   # temp file so a failed transfer can't leave partial GRIB messages (or,
   # with --retry to stdout, duplicated bytes) in the concatenation.
+  # --retry alone doesn't cover curl exit 7 (connection failed), which is how
+  # the OVH mirror's transient outages manifest; --retry-all-errors does.
   local url="$1" tmp="${OUT}.part"
-  if ! curl -fsS --retry 3 --retry-delay 2 --max-time 300 -o "$tmp" "$url"; then
+  if ! curl -fsS --retry 5 --retry-delay 10 --retry-all-errors \
+       --connect-timeout 20 --max-time 300 -o "$tmp" "$url"; then
     echo "failed to fetch $(basename "$url")" >&2
     rm -f "$tmp"
     exit 1
