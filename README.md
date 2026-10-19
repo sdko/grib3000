@@ -6,11 +6,18 @@ Hosted free on GitHub Actions + Releases — no server, no card, no API key.
 A scheduled workflow runs hourly. For each model (ECMWF, GFS, Arpège,
 Arome 0.025°, Arome 0.01°) it:
 
-1. Detects the most-recent published cycle (with sensible lag accounting).
+1. Detects the most-recent *fully* published cycle (with sensible lag
+   accounting). For MF models it probes the cycle's **last** file
+   (Arpège `061H072H`, Arome `51H` / `49H51H`), since MF publishes the
+   horizon incrementally over a few hours.
 2. Bails if a release already exists for that cycle.
 3. Pulls the native-domain GRIB2 from the upstream open-data endpoint
    (ECMWF/GFS via index + HTTP Range, MF via the OVH S3 mirror).
-4. Runs `wgrib2 -small_grib` once per region.
+   MF downloads retry on any error (including connection failures on the
+   OVH mirror) and the build hard-fails on a missing file rather than
+   shipping a truncated horizon.
+4. Filters to 10 m wind, gust, MSL pressure and 2 m temperature, then runs
+   `wgrib2 -small_grib` once per region.
 5. Publishes two releases:
    - `<model>-<YYYY-MM-DD>-<HH>Z` — dated archive, auto-pruned after 3 days.
    - `<model>-latest` — rolling pointer the app reads.
@@ -63,6 +70,8 @@ stable once apps start consuming them.
   5–30 min late. Fine for forecast data.
 - **60-day inactivity disables crons.** Any push resets the clock.
 - **No SLA.** If a run fails, the app stays on whatever it last cached.
+  A failed build publishes nothing, so the next hourly run retries the
+  same cycle.
 - **Cost shape: regions are cheap, models are expensive.** Adding a region
   is one more `wgrib2` call; adding a model is a whole new fetcher.
 
