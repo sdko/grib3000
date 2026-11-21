@@ -4,16 +4,29 @@
     "source": "ecmwf-opendata",
     "native_bbox": [-90, 90, -180, 180],
     "cycle_step_h": 6,
-    "lag_minutes": 420,
-    "regions": ["france-med", "manche-mer-du-nord", "atlantique"]
+    "lag_minutes": 480,
+    "horizon_h": 240,
+    "regions": ["france-med", "italie-med", "manche-mer-du-nord", "atlantique"]
+  },
+  "ecmwfens": {
+    "name": "ECMWF ENS 0.25° (50 membres)",
+    "source": "ecmwf-opendata",
+    "native_bbox": [-90, 90, -180, 180],
+    "cycle_step_h": 6,
+    "lag_minutes": 510,
+    "horizon_h": 144,
+    "fields": ["wind"],
+    "members": 50,
+    "regions": ["france-med", "italie-med", "manche-mer-du-nord", "atlantique"]
   },
   "gfs": {
     "name": "NOAA GFS 0.25°",
     "source": "nomads",
     "native_bbox": [-90, 90, -180, 180],
     "cycle_step_h": 6,
-    "lag_minutes": 270,
-    "regions": ["france-med", "manche-mer-du-nord", "atlantique"]
+    "lag_minutes": 300,
+    "horizon_h": 240,
+    "regions": ["france-med", "italie-med", "manche-mer-du-nord", "atlantique"]
   },
   "arpege01": {
     "name": "Météo-France Arpège 0.1° (Europe)",
@@ -21,7 +34,40 @@
     "native_bbox": [20, 72, -32, 42],
     "cycle_step_h": 6,
     "lag_minutes": 360,
-    "regions": ["france-med", "manche-mer-du-nord", "atlantique"]
+    "horizon_h": 102,
+    "regions": ["france-med", "italie-med", "manche-mer-du-nord", "atlantique"]
+  },
+  "iconeu": {
+    "name": "DWD ICON-EU 0.0625° (Europe)",
+    "source": "dwd-opendata",
+    "native_bbox": [29.5, 70.5, -23.5, 62.5],
+    "cycle_step_h": 6,
+    "lag_minutes": 240,
+    "horizon_h": 120,
+    "regions": ["france-med", "italie-med", "manche-mer-du-nord", "atlantique"]
+  },
+  "icon2i": {
+    "name": "ItaliaMeteo ICON-2I 2.2 km (Italie)",
+    "source": "meteohub",
+    "native_bbox": [33.7, 48.9, 3, 22],
+    "cycle_step_h": 12,
+    "lag_minutes": 120,
+    "horizon_h": 72,
+    "regions": ["italie-med"]
+  },
+  "wrf": {
+    "name": "ItaliaMeteo WRF 1.5 km (Italie)",
+    "source": "meteohub",
+    "native_bbox": [31.0, 49.5, 0.1, 24.5],
+    "cycle_step_h": 12,
+    "lag_minutes": 540,
+    "horizon_h": 72,
+    "fields": ["wind", "gust"],
+    "regrid": {
+      "dlon": 0.02,
+      "dlat": 0.015
+    },
+    "regions": ["italie-med"]
   },
   "arome0025": {
     "name": "Météo-France Arome 0.025° (W. Europe)",
@@ -29,7 +75,9 @@
     "native_bbox": [37.5, 55.4, -12, 16],
     "cycle_step_h": 3,
     "lag_minutes": 240,
-    "regions": ["france-med", "atlantique"]
+    "horizon_h": 51,
+    "partial_regions": ["italie-med"],
+    "regions": ["france-med", "italie-med", "atlantique"]
   },
   "arome001": {
     "name": "Météo-France Arome 0.01° (W. Europe, hi-res)",
@@ -37,6 +85,7 @@
     "native_bbox": [37.5, 55.4, -12, 16],
     "cycle_step_h": 3,
     "lag_minutes": 240,
+    "horizon_h": 51,
     "regions": ["france-med", "atlantique"]
   }
 }

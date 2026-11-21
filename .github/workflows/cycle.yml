@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        model: [ecmwf, gfs, arpege01, arome0025, arome001]
+        model: [ecmwf, ecmwfens, gfs, arpege01, iconeu, icon2i, wrf, arome0025, arome001]
     runs-on: ubuntu-latest
     timeout-minutes: 35
     concurrency:

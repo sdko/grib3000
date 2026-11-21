@@ -4,6 +4,11 @@
     "bbox": [39.5, 44.5, 2.5, 11.0],
     "description": "Golfe du Lion, Côte d'Azur, Ligure, Corse, nord-Sardaigne, est-Baléares."
   },
+  "italie-med": {
+    "name": "Méditerranée italienne",
+    "bbox": [35.0, 45.0, 6.0, 17.0],
+    "description": "Golfe de Gênes, mer Ligure, Corse, Sardaigne, Tyrrhénienne, Sicile, détroit de Messine, Malte, canal de Sicile."
+  },
   "manche-mer-du-nord": {
     "name": "Manche + Mer du Nord",
     "bbox": [48.5, 56.0, -6.0, 9.0],

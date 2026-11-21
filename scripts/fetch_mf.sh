@@ -29,7 +29,9 @@ fetch() {
 case "$MODEL" in
   arpege01)
     # SP1 = surface package 1 (incl. 10 m wind, MSL, T2m, gust).
-    for r in 000H012H 013H024H 025H036H 037H048H 049H060H 061H072H; do
+    # Full 102 h horizon (every run publishes it): 8 x 12-h files + 097H102H.
+    for r in 000H012H 013H024H 025H036H 037H048H 049H060H 061H072H \
+             073H084H 085H096H 097H102H; do
       fetch "${S3}/${STAMP}/arpege/01/SP1/arpege__01__SP1__${r}__${STAMP}.grib2"
     done
     ;;
